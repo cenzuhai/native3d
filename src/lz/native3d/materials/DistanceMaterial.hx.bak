@@ -1,0 +1,68 @@
+package lz.native3d.materials 
+{
+	import flash.display3D.Context3D;
+	import flash.display3D.Context3DProgramType;
+	import flash.display3D.Program3D;
+	import lz.native3d.core.BasicPass3D;
+	import lz.native3d.core.Instance3D;
+	import lz.native3d.core.Node3D;
+	import lz.native3d.core.PerspectiveTransform;
+	import lz.native3d.core.VertexBufferSet;
+	import lz.native3d.ns.native3d;
+	/**
+	 * ...
+	 * @author lizhi http://game-develop.net/
+	 */
+	use namespace native3d;
+	class DistanceMaterial extends MaterialBase
+	{
+		public var p:Program3D;
+		public function DistanceMaterial() 
+		{
+			/*var vc:String = "m44 op,va0,vc0\n" +
+							"m44 v0,va0,vc4\n"+
+							"";
+			var fc:String =
+							
+							"dp3 ft0,v0,v0\n" +
+							"rcp ft0.x,ft0\n" +
+							"mov oc,ft0.xxxx\n"+
+							"";*/
+			var vc:String = "m44 vt0,va0,vc0\n" +
+							"m44 vt0,vt0,vc4\n" +
+							"m44 op,vt0,vc8\n" +
+							"dp3 v0,vt0,vt0\n"+
+							"";
+			var fc:String =
+							"rcp oc,v0\n" +
+							//"mov oc,v0\n"
+							""
+			p = createProgram(vc, fc);
+			
+			//vertex = new Vector<Float>(32);
+			fragment =Vector<Float>([1,Math.random(),Math.random(),Math.random()]);
+		
+		}
+		
+		override public function draw(node:Node3D, pass:BasicPass3D):Void {
+			var c3d:Context3D = Instance3D.instance.c3d;
+			c3d.setProgram(p);
+			var xyz:VertexBufferSet = node.drawAble.xyz;
+			c3d.setVertexBufferAt(0, xyz.vertexBuff, 0, xyz.format);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, node.worldMatrix, true);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, pass.camera.invert, true);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,8,pass.camera.perspectiveProjection, true);
+			
+			c3d.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 0, fragment);
+			c3d.drawTriangles(node.drawAble.indexBufferSet.indexBuff);
+			c3d.setVertexBufferAt(0,null, 0, xyz.format);
+		}
+		
+		override public function init(node:Node3D):Void {
+			node.drawAble.xyz.init();
+			node.drawAble.indexBufferSet.init();
+		}
+		
+	}
+
+}

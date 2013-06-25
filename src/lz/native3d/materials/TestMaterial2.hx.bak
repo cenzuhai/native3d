@@ -1,0 +1,67 @@
+package lz.native3d.materials ;
+//{
+	import flash.display3D.Context3D;
+	import flash.display3D.Context3DBlendFactor;
+	import flash.display3D.Context3DProgramType;
+	import flash.display3D.Program3D;
+	import flash.geom.Vector3D;
+	import flash.Vector;
+	import lz.native3d.core.BasicPass3D;
+	import lz.native3d.core.Instance3D;
+	import lz.native3d.core.Node3D;
+	import lz.native3d.core.VertexBufferSet;
+	//import lz.native3d.ns.native3d;
+	/**
+	 * ...
+	 * @author lizhi http://game-develop.net/
+	 */
+	//use namespace native3d;
+	class TestMaterial2 extends MaterialBase
+	{
+		public var p:Program3D;
+		private var v:Vector<Float>;
+		private var ts:TestShader;
+		private var color:Vector3D;
+		public function new(ts:TestShader) 
+		{
+			super();
+			color = new Vector3D(Math.random(), Math.random(), Math.random(), Math.random());
+			this.ts = ts;
+			p = ts.i.program;
+			/*var vc:String = "m44 vt0,va0,vc0\n" +
+							"m44 op,vt0,vc4\n"+
+							"";
+			var fc:String = "mov oc,fc0\n" +
+							"";
+			p = createProgram(vc, fc);*/
+		}
+		inline override public function draw(node:Node3D, pass:BasicPass3D):Void {
+			var c3d:Context3D = Instance3D.getInstance().c3d;
+			
+			/*ts.color = color;
+			ts.mpos = node.worldMatrix;
+			ts.mproj = pass.camera.perspectiveProjectionMatirx;
+			var xyz:VertexBufferSet = node.drawAble.xyz;
+			ts.bind(c3d, xyz.vertexBuff);*/
+			
+			var xyz:VertexBufferSet = node.drawAble.xyz;
+			c3d.setProgram(p);
+			c3d.setVertexBufferAt(0, xyz.vertexBuff, 0, xyz.format);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, node.worldMatrix, true);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, pass.camera.perspectiveProjectionMatirx, true);
+			c3d.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 0, fragment);
+			
+			c3d.drawTriangles(node.drawAble.indexBufferSet.indexBuff);
+			c3d.setVertexBufferAt(0,null, 0, xyz.format);
+		}
+		override public function init(node:Node3D):Void {
+			node.drawAble.xyz.init();
+			node.drawAble.indexBufferSet.init();
+			vertex = new Vector<Float>(32);
+			fragment =Vector.ofArray([Math.random(), Math.random(), Math.random(), Math.random(),2,0,0,0]);
+		}
+	}
+	
+	
+
+//}

@@ -1,0 +1,30 @@
+package lz.native3d.materials;
+import flash.display3D.Context3D;
+import hxsl.Shader;
+
+/**
+ * ...
+ * @author lizhi http://game-develop.net/
+ */
+class TestShader extends Shader
+{
+	public var i:ShaderInstance;
+	public function new(c:Context3D) {
+		super();
+		i = getInstance();
+		i.program = c.createProgram();
+		i.program.upload(i.vertexBytes.getData(), i.fragmentBytes.getData());
+	}
+	static var SRC = {
+		var input : {
+			pos : Float3
+		};
+		function vertex( mpos : M44, mproj : M44) {
+			out = pos.xyzw * mpos * mproj;
+		}
+		function fragment( color:Float4) {
+			out = 2*color;
+		}
+	};
+	
+}

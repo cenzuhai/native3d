@@ -1,0 +1,147 @@
+package lz.native3d.materials 
+{
+	import com.adobe.utils.AGALMiniAssembler;
+	import flash.display.BitmapData;
+	import flash.display3D.Context3D;
+	import flash.display3D.Context3DBlendFactor;
+	import flash.display3D.Context3DProgramType;
+	import flash.display3D.Program3D;
+	import flash.geom.Vector3D;
+	import flash.utils.ByteArray;
+	import flash.utils.Endian;
+	import flash.utils.getTimer;
+	import lz.native3d.core.BasicPass3D;
+	import lz.native3d.core.Instance3D;
+	import lz.native3d.core.Node3D;
+	import lz.native3d.core.PerspectiveTransform;
+	import lz.native3d.core.TextureSet;
+	import lz.native3d.core.VertexBufferSet;
+	import lz.native3d.meshs.MeshUtils;
+	import lz.native3d.ns.native3d;
+	/**
+	 * ...
+	 * @author lizhi http://game-develop.net/
+	 */
+	use namespace native3d;
+	class TestMaterial extends MaterialBase
+	{
+		public var p:Program3D;
+		public var p2:Program3D;
+		private var v:Vector<Float>;
+		private var cpass:BasicPass3D;
+		public function TestMaterial() 
+		{
+			var vc:String = "m44 vt0,va0,vc0\n"+
+							"mov op,vt0\n" +
+							"mov v2,vt0\n" +
+							"mov v0,va1\n" +
+							"m33 vt0.xyz,va2,vc4\n" +
+							"nrm vt0.xyz,vt0\n" +
+							"mov v1,vt0\n"+
+							"";
+			var fc:String = "tex ft0,v0,fs0<linear,nomip,2d>\n" +
+							"sub ft1,fc0,v2\n" +
+							"nrm ft1.xyz,ft1\n" +
+							"dp3 ft1.x,ft1.xyz,v1.xyz\n" +
+							"sat ft1.x,ft1.x\n"+
+							"mul oc,ft0,ft1.xxxx\n"+
+							"";
+			p = createProgram(vc, fc);
+			
+			var vc2:String = "m44 vt0,va0,vc0\n"+
+							"mov op,vt0\n" +
+							"mov v2,vt0\n" +//pos
+							
+							"mov v0,va1\n" +
+							"m33 vt0.xyz,va2,vc4\n" +
+							"nrm vt0.xyz,vt0\n" +
+							"mov v1,vt0\n" +//norm
+							
+							"m44 vt1,va0,vc4\n" +
+							"sub vt1,vt1,vc9\n" +
+							"dp3 vt2,vt1,vt0\n" +
+							"add vt2,vt2,vt2\n" +
+							"mul vt2,vt2,vt0\n" +
+							"sub vt1,vt1,vt2\n" +
+							"nrm vt1.xyz,vt1\n" +
+							"mov v3,vt1\n" +
+							
+							
+							/*"mov vt0,va0\n" +
+							"nrm vt0.xyz,vt0\n"+
+							"mov v3,vt0\n"+*/
+							"";
+			var fc2:String = "tex ft0,v0,fs0<linear,miplinear,2d>\n" +
+							"sub ft1,fc0,v2\n" +
+							"nrm ft1.xyz,ft1\n" +
+							"dp3 ft1.x,ft1.xyz,v1.xyz\n" +
+							"sat ft1.x,ft1.x\n"+
+							"mul ft0,ft0,ft1.xxxx\n"+
+							"mul ft0,ft0,fc1.xxxx\n" +
+							
+							"tex ft2,v3,fs1<linear,nomip,cube>\n" +
+							
+							"mul ft2,ft2,ft1.xxxx\n"+
+							"mul ft2,ft2,fc1.yyyy\n"+
+							"add oc,ft2,ft0\n"+
+							"";
+			p2 = createProgram(vc2, fc2);
+			
+			v = Vector<Float>([0, 0, -3, 0, .4, .9, 0, 0]);
+			vertex = new Vector<Float>(36);
+			fragment = new Vector<Float>(4);
+		}
+		override public function draw(node:Node3D, pass:BasicPass3D):Void {
+			Instance3D.instance.doTransform.doTransformCameraNode(node, pass.camera);
+			var pt:PerspectiveTransform = node.getPerspectiveTransform(pass.camera);
+			var c3d:Context3D = Instance3D.instance.c3d;
+			if (pass.target) {
+				cpass = pass;
+				c3d.setProgram(p);
+			}else {
+				c3d.setProgram(p2);
+				c3d.setTextureAt(1, cpass.target.texture);
+			}
+			var xyz:VertexBufferSet = node.drawAble.xyz;
+			var uv:VertexBufferSet = node.drawAble.uv;
+			var norm:VertexBufferSet = node.drawAble.norm;
+			c3d.setVertexBufferAt(0, xyz.vertexBuff, 0, xyz.format);
+			c3d.setVertexBufferAt(1, uv.vertexBuff, 0, uv.format);
+			c3d.setVertexBufferAt(2, norm.vertexBuff, 0, norm.format);
+			c3d.setTextureAt(0, node.drawAble.texture.texture);
+			if (perspectiveVersion != pt.perspectiveVersion) {
+				pt.perspectiveProjectionMatirx.copyRawDataTo(vertex, 0, true);
+				perspectiveVersion = pt.perspectiveVersion;
+			}
+			if (worldVersion != node.worldVersion) {
+				node.worldMatrix.copyRawDataTo(vertex, 16, true);
+				worldVersion = node.worldVersion;
+			}
+			if (cameraMatrixVersion != pass.camera.worldVersion) {
+				var cp:Vector3D = pass.camera.worldMatrix.position;
+				vertex[32] = cp.x;
+				vertex[33] = cp.y;
+				vertex[34] = cp.z;
+				cameraMatrixVersion = pass.camera.worldVersion;
+			}
+			c3d.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 0, vertex);
+			c3d.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 0, v);
+			c3d.drawTriangles(node.drawAble.indexBufferSet.indexBuff);
+			
+			c3d.setTextureAt(0, null);
+			c3d.setTextureAt(1, null);
+			
+			c3d.setVertexBufferAt(0, null, 0, xyz.format);
+			c3d.setVertexBufferAt(1, null, 0, uv.format);
+			c3d.setVertexBufferAt(2, null, 0, norm.format);
+		}
+		override public function init(node:Node3D):Void {
+			node.drawAble.xyz.init();
+			node.drawAble.uv.init();
+			node.drawAble.indexBufferSet.init();
+			if(node.drawAble.norm==null)MeshUtils.computeNorm(node.drawAble);
+			node.drawAble.norm.init();
+		}
+	}
+
+}

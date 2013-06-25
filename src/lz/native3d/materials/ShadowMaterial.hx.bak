@@ -1,0 +1,80 @@
+package lz.native3d.materials 
+{
+	import flash.display3D.Context3D;
+	import flash.display3D.Context3DProgramType;
+	import flash.display3D.Program3D;
+	import flash.display3D.textures.TextureBase;
+	import lz.native3d.core.BasicPass3D;
+	import lz.native3d.core.Instance3D;
+	import lz.native3d.core.Node3D;
+	import lz.native3d.core.PerspectiveTransform;
+	import lz.native3d.core.VertexBufferSet;
+	import lz.native3d.meshs.MeshUtils;
+	import lz.native3d.ns.native3d;
+	/**
+	 * ...
+	 * @author lizhi http://game-develop.net/
+	 */
+	use namespace native3d;
+	class ShadowMaterial extends MaterialBase
+	{
+		private var p:Program3D;
+		private var disPass:BasicPass3D;
+		public function ShadowMaterial(disPass:BasicPass3D) 
+		{
+			this.disPass = disPass;
+			var vc:String = "m44 vt0,va0,vc0\n" +
+							"m44 op,vt0,vc4\n" +
+							"m44 vt0,vt0,vc8\n" +
+							"m44 vt1,vt0,vc12\n" +
+							"div vt1.xy,vt1,vt1.ww\n" +//-1,1
+							"mul vt1.xy,vt1,vc16.xy\n" +//-.5,.5
+							"add vt1.xy,vt1,vc16.xx\n" +//0,1
+							"mov v0,vt1\n" +
+							"dp3 v1,vt0,vt0\n"+
+							"";
+							
+			var fc:String =
+							"tex ft0,v0,fs0<linear,nomip,2d>\n" +
+							"rcp ft0.x,ft0.x\n" +
+							//"add ft0.x,ft0.x,fc0.z\n"+
+							"sge ft0.x,ft0.x,v1.y\n" +
+							//"slt ft0.x,v1.x,ft0.x\n"+
+							"mul ft0.x,ft0.x,fc0.x\n" +
+							"add ft0.x,ft0.x,fc0.x\n" +
+							"mov oc,ft0.xxxx\n"+
+							"";
+			p = createProgram(vc, fc);
+			vertex = Vector<Float>([.5,-.5,0,0]);
+			fragment = Vector<Float>([.5, .5, 1, 1]);
+			
+		}
+		
+		override public function draw(node:Node3D, pass:BasicPass3D):Void {
+			var c3d:Context3D = Instance3D.instance.c3d;
+			c3d.setProgram(p);
+			var xyz:VertexBufferSet = node.drawAble.xyz;
+			c3d.setVertexBufferAt(0, xyz.vertexBuff, 0, xyz.format);
+			c3d.setTextureAt(0, disPass.target.texture);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, node.worldMatrix, true);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, pass.camera.perspectiveProjectionMatirx, true);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, disPass.camera.invert, true);
+			c3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX,12,disPass.camera.perspectiveProjection, true);
+			c3d.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 16, vertex);
+			
+			c3d.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 0, fragment);
+			c3d.drawTriangles(node.drawAble.indexBufferSet.indexBuff);
+			c3d.setVertexBufferAt(0, null, 0, xyz.format);
+			c3d.setTextureAt(0, null);
+		}
+		
+		override public function init(node:Node3D):Void {
+			node.drawAble.xyz.init();
+			node.drawAble.uv.init();
+			node.drawAble.indexBufferSet.init();
+			if(node.drawAble.norm==null)MeshUtils.computeNorm(node.drawAble);
+			node.drawAble.norm.init();
+		}
+	}
+
+}

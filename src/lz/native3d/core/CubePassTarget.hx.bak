@@ -1,0 +1,31 @@
+package lz.native3d.core 
+{
+	import flash.display3D.Context3DTextureFormat;
+	import flash.geom.Matrix3D;
+	import flash.geom.Vector3D;
+	/**
+	 * ...
+	 * @author lizhi http://game-develop.net/
+	 */
+	class CubePassTarget extends PassTarget
+	{
+		
+		public function CubePassTarget(size:Int=512) 
+		{
+			texture = Instance3D.instance.c3d.createCubeTexture(size, Context3DTextureFormat.BGRA, true);
+		}
+		override public function pass(pass:BasicPass3D, nodes:Vector<Node3D>):Void {
+			var i:Int = 0;
+			//pass.camera.matrixChanged = true;
+			var matr:Matrix3D = new Matrix3D;
+			matr.appendRotation(90, Vector3D.Y_AXIS);
+			for (; i < 6;i++ ) {
+				surfaceSelector = i;
+				Instance3D.instance.c3d.setRenderToTexture(texture, enableDepthAndStencil, antiAlias, surfaceSelector);
+				Instance3D.instance.c3d.clear();
+			}
+		}
+		
+	}
+
+}

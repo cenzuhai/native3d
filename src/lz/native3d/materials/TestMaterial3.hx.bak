@@ -1,0 +1,59 @@
+package lz.native3d.materials 
+{
+	import flash.display3D.Context3D;
+	import flash.display3D.Context3DProgramType;
+	import flash.display3D.Program3D;
+	import flash.display3D.textures.TextureBase;
+	import lz.native3d.core.BasicPass3D;
+	import lz.native3d.core.Instance3D;
+	import lz.native3d.core.Node3D;
+	import lz.native3d.core.PerspectiveTransform;
+	import lz.native3d.core.VertexBufferSet;
+	import lz.native3d.ns.native3d;
+	/**
+	 * ...
+	 * @author lizhi http://game-develop.net/
+	 */
+	use namespace native3d;
+	class TestMaterial3 extends MaterialBase
+	{
+		public var p:Program3D;
+		private var v:Vector<Float>;
+		private var texture:TextureBase;
+		public function TestMaterial3(texture:TextureBase) 
+		{
+			this.texture = texture;
+			var vc:String = "m44 op,va0,vc0\n" +
+							"mov v0,va0\n"+
+							"";
+			var fc:String = "tex oc,v0,fs0 <linear,nomip,cube>\n" +
+							"";
+			p = createProgram(vc, fc);
+		}
+		override public function draw(node:Node3D, pass:BasicPass3D):Void {
+			Instance3D.instance.doTransform.doTransformCameraNode(node, pass.camera);
+			var c3d:Context3D = Instance3D.instance.c3d;
+			c3d.setProgram(p);
+			var xyz:VertexBufferSet = node.drawAble.xyz;
+			c3d.setVertexBufferAt(0, xyz.vertexBuff, 0, xyz.format);
+			c3d.setTextureAt(0, texture);
+			var pt:PerspectiveTransform = node.getPerspectiveTransform(pass.camera);
+			if (perspectiveVersion!=pt.perspectiveVersion) {
+				pt.perspectiveProjectionMatirx.copyRawDataTo(vertex, 0, true);
+				perspectiveVersion = pt.perspectiveVersion;
+			}
+			c3d.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 0, vertex);
+			c3d.setProgramConstantsFromVector(Context3DProgramType.FRAGMENT, 0, fragment);
+			c3d.drawTriangles(node.drawAble.indexBufferSet.indexBuff);
+			c3d.setVertexBufferAt(0,null, 0, xyz.format);
+			c3d.setTextureAt(0, null);
+		}
+		override public function init(node:Node3D):Void {
+			node.drawAble.xyz.init();
+			node.drawAble.indexBufferSet.init();
+			vertex = new Vector<Float>(16);
+			fragment =Vector<Float>([Math.random(),Math.random(),Math.random(),Math.random()]);
+		}
+	}
+
+}
