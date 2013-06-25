@@ -82,6 +82,9 @@ package lz.native3d.core ;
 		  * 摄像机裁剪需要的半径 填负数，因为动态计算矩阵 会造成不必要的性能消耗，所以这里用折中的办法，手动填写，参看TeapotsExample.hx
 		  */
 		 public var radius:Float = 0;
+		 
+		 public var twoDData:TwoDData;
+		
 		public function new() 
 	{
 		frame =  Std.random(100000);

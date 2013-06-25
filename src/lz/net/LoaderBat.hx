@@ -30,19 +30,19 @@ class LoaderBat extends EventDispatcher
 		loaderComps = new Array<LoaderCell>();
 	}
 	
-	public function addBytesImageLoader(bytes:ByteArray,name:String,userData:Dynamic=null):LoaderCell {
+	public function addBytesImageLoader(bytes:ByteArray,name:String=null,userData:Dynamic=null):LoaderCell {
 		return  addLoader(LoaderCell.createBytesImageLoader(bytes, name),userData);
 	}
 	
-	public function addImageLoader(url:String,name:String,userData:Dynamic=null):LoaderCell {
+	public function addImageLoader(url:String,name:String=null,userData:Dynamic=null):LoaderCell {
 		return  addLoader(LoaderCell.createImageLoader(url, name),userData);
 	}
 	
-	public function addBytesLoader(url:String,name:String,userData:Dynamic=null):LoaderCell {
+	public function addBytesLoader(url:String,name:String=null,userData:Dynamic=null):LoaderCell {
 		return  addLoader(LoaderCell.createBytesLoader(url, name),userData);
 	}
 	
-	public function addUrlLoader(url:String,name:String,userData:Dynamic=null):LoaderCell {
+	public function addUrlLoader(url:String,name:String=null,userData:Dynamic=null):LoaderCell {
 		return  addLoader(LoaderCell.createUrlLoader(url, name),userData);
 	}
 	

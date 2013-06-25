@@ -8,7 +8,7 @@ package lz.native3d.core ;
 	 */
 	class IndexBufferSet 
 	{
-		private var num:Int;
+		public var num:Int;
 		private var start:Int;
 		public var data:Vector<#if flash UInt #else Int #end>;
 		public var indexBuff:IndexBuffer3D;
@@ -24,8 +24,12 @@ package lz.native3d.core ;
 		public function init():Void {
 			if(indexBuff==null){
 			indexBuff = i3d.c3d.createIndexBuffer(num);
-			indexBuff.uploadFromVector(data, start, num);
+			upload();
 			}
+		}
+		
+		public function upload():Void {
+			indexBuff.uploadFromVector(data, start, num);
 		}
 	}
 

@@ -21,6 +21,8 @@ package lz.native3d.core ;
 		
 		private static var tempTexture:TextureBase;
 		public var i3d:Instance3D;
+		public var width:Int;
+		public var height:Int;
 		public function new(i3d:Instance3D) 
 		{
 			this.i3d = i3d;
@@ -41,6 +43,7 @@ package lz.native3d.core ;
 				var pow:Int = Std.int(Math.pow(2, i));
 				if (pow>=bmd.width) {
 					w = pow;
+					width = w;
 					break;
 				}
 			}
@@ -48,6 +51,7 @@ package lz.native3d.core ;
 				var pow:Int = Std.int(Math.pow(2, i));
 				if (pow>=bmd.height) {
 					h = pow;
+					height = h;
 					break;
 				}
 			}

@@ -1,0 +1,14 @@
+<TextureAtlas imagePath="sheet.png">
+<SubTexture name="尘爆-01.png" fx="219" fy="155" x="253" y="964" width="89" height="89"/>
+<SubTexture name="尘爆-02.png" fx="106" fy="47" x="376" y="927" width="308" height="308"/>
+<SubTexture name="尘爆-03.png" fx="72" fy="76" x="0" y="316" width="385" height="268"/>
+<SubTexture name="尘爆-04.png" fx="0" fy="51" x="0" y="0" width="530" height="314"/>
+<SubTexture name="尘爆-05.png" fx="87" fy="0" x="0" y="586" width="374" height="376"/>
+<SubTexture name="尘爆-06.png" fx="91" fy="46" x="376" y="586" width="347" height="339"/>
+<SubTexture name="尘爆-07.png" fx="126" fy="45" x="686" y="927" width="307" height="330"/>
+<SubTexture name="尘爆-08.png" fx="119" fy="42" x="725" y="354" width="319" height="343"/>
+<SubTexture name="尘爆-09.png" fx="112" fy="33" x="532" y="0" width="333" height="352"/>
+<SubTexture name="尘爆-10.png" fx="141" fy="78" x="867" y="0" width="248" height="239"/>
+<SubTexture name="尘爆-11.png" fx="169" fy="63" x="995" y="699" width="225" height="262"/>
+<SubTexture name="尘爆-12.png" fx="138" fy="56" x="0" y="964" width="251" height="266"/>
+</TextureAtlas>

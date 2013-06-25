@@ -1,0 +1,10 @@
+<TextureAtlas imagePath="sheet.png">
+<SubTexture name="战车爆炸-1.png" fx="243" fy="223" x="388" y="146" width="120" height="144"/>
+<SubTexture name="战车爆炸-2.png" fx="219" fy="223" x="388" y="0" width="168" height="144"/>
+<SubTexture name="战车爆炸-3.png" fx="219" fy="199" x="0" y="194" width="192" height="192"/>
+<SubTexture name="战车爆炸-4.png" fx="219" fy="199" x="0" y="0" width="192" height="192"/>
+<SubTexture name="战车爆炸-5.png" fx="219" fy="199" x="0" y="388" width="192" height="192"/>
+<SubTexture name="战车爆炸-6.png" fx="219" fy="199" x="194" y="0" width="192" height="192"/>
+<SubTexture name="战车爆炸-7.png" fx="219" fy="199" x="194" y="388" width="192" height="192"/>
+<SubTexture name="战车爆炸-8.png" fx="219" fy="199" x="194" y="194" width="192" height="192"/>
+</TextureAtlas>
