@@ -23,6 +23,8 @@ package lz.native3d.core;
 		
 		public var is2d:Bool = false;
 		public var i3d:Instance3D;
+		public var cscale:Vector3D;
+		public var cpos:Vector3D;
 		public function new(width:Int,height:Int,i3d:Instance3D,is2d:Bool=false) 
 		{
 			super();
@@ -34,9 +36,11 @@ package lz.native3d.core;
 			perspectiveProjectionMatirx = new Matrix3D();
 			add(new Node3D());
 			
+			cscale = new Vector3D(1,-1,1);
+			cpos = new Vector3D(-1,1,0);
 			if (is2d) {
 				_zNear = 0;
-				orthoLH(width, height, _zNear, _zFar);
+				orthoLH(width, height, _zNear, _zFar,cscale,cpos);
 			}else {
 				_zNear = 1;
 				perspectiveFieldOfViewLH(Math.PI / 4, width/height, _zNear, _zFar);
@@ -84,22 +88,24 @@ package lz.native3d.core;
 			));*/
 		}
 		
-		public function orthoLH(width:Float, height:Float, zNear:Float, zFar:Float):Void {
+		public function orthoLH(width:Float, height:Float, zNear:Float, zFar:Float,scale:Vector3D,pos:Vector3D):Void {
 			_zFar = zFar;
 			_zNear = zNear;
-			/*			perspectiveProjection.identity();
-			perspectiveProjection.appendScale(scaleX, -scaleY, 1/10000000);*/
+			cscale = scale;
+			cpos = pos;
 			perspectiveProjection.copyRawDataFrom(Vector.ofArray([
 				2.0/width, 0.0, 0.0, 0.0,
 				0.0, 2.0/height, 0.0, 0.0,
 				0.0, 0.0, 1.0/(zFar-zNear), 0.0,
 				0.0, 0.0, zNear/(zNear-zFar), 1.0
 			]));
+			perspectiveProjection.appendScale(scale.x, scale.y, scale.z);
+			perspectiveProjection.appendTranslation(cpos.x, cpos.y, cpos.z);
 		}
 		
 		public function resize(width:Int, height:Int):Void {
 			if (is2d) {
-				orthoLH(i3d.width, i3d.height, _zNear, _zFar);
+				orthoLH(i3d.width, i3d.height, _zNear, _zFar,cscale,cpos);
 			}else {
 				perspectiveFieldOfViewLH(Math.PI / 4, i3d.width/i3d.height, _zNear, _zFar);
 			}

@@ -1,0 +1,10 @@
+<TextureAtlas imagePath="sheet.png">
+<SubTexture name="加血-1.png" fx="0" fy="18" x="167" y="0" width="165" height="267"/>
+<SubTexture name="加血-2.png" fx="0" fy="2" x="334" y="285" width="165" height="283"/>
+<SubTexture name="加血-3.png" fx="0" fy="2" x="334" y="0" width="165" height="283"/>
+<SubTexture name="加血-4.png" fx="0" fy="0" x="167" y="269" width="165" height="285"/>
+<SubTexture name="加血-5.png" fx="0" fy="23" x="501" y="0" width="165" height="262"/>
+<SubTexture name="加血-6.png" fx="0" fy="30" x="0" y="398" width="165" height="255"/>
+<SubTexture name="加血-7.png" fx="0" fy="52" x="0" y="163" width="165" height="233"/>
+<SubTexture name="加血-8.png" fx="0" fy="124" x="0" y="0" width="165" height="161"/>
+</TextureAtlas>

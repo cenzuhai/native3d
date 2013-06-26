@@ -38,11 +38,11 @@ package lz.native3d.core.twoDAnimation ;
 						frame.offset.y = Std.parseFloat(sub.get("fy")) - center.y;
 						var x:Float = Std.parseFloat(sub.get("x"));
 						var y:Float = Std.parseFloat(sub.get("y"));
-						//frame.matrix.appendTranslation(frame.offset.x-Std.parseFloat(sub.get("x")),frame.offset.y-Std.parseFloat(sub.get("y")),0);
 						frame.size.x = Std.parseFloat(sub.get("width"));
 						frame.size.y = Std.parseFloat(sub.get("height"));
 						frame.matrix.appendScale(frame.size.x, frame.size.y, 1);
-						frame.matrix.appendTranslation(frame.offset.x+frame.size.x/2,frame.offset.y+frame.size.y/2,0);
+						frame.matrix.appendTranslation(frame.size.x / 2, frame.size.y / 2, 0);
+						frame.matrix.appendTranslation(frame.offset.x, frame.offset.y, 0);
 						//0 1
 						//2 3
 						frame.uv = Vector.ofArray([

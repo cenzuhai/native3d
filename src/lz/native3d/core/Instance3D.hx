@@ -20,10 +20,12 @@ package lz.native3d.core ;
 		public var passs:Vector<BasicPass3D>;// = new Vector<BasicPass3D>();
 		public var lights:Vector<BasicLight3D>;
 		public var width:Int=400;
-		public var height:Int=400;
+		public var height:Int = 400;
+		public var culling:Context3DTriangleFace;
 		public function new() 
 		{
 			super();	
+			culling = Context3DTriangleFace.FRONT;
 			root = new Node3D();
 			camera = new Camera3D(width,height,this);
 			 doTransform = new BasicDoTransform3D();
@@ -41,7 +43,7 @@ package lz.native3d.core ;
 			//root.add(camera);
 			//c3d.configureBackBuffer(400, 400, 0);
 			resize(width, height);
-			c3d.setCulling(Context3DTriangleFace.FRONT);
+			c3d.setCulling(culling);
 			dispatchEvent(new Event(Event.CONTEXT3D_CREATE));
 		}
 		

@@ -2,6 +2,7 @@ package ;
 import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.display3D.Context3DTextureFormat;
+import flash.display3D.Context3DTriangleFace;
 import flash.events.Event;
 import flash.geom.Point;
 import flash.Lib;
@@ -28,16 +29,21 @@ class TwoDBatchExample extends Sprite
 	var node:Node3D;
 	var bmd:BitmapData;
 	var xml:Xml;
-
+	var center:Point;
 	public function new() 
 	{
 		super();
 		var loader:LoaderBat = new LoaderBat();
 		loader.addEventListener(Event.COMPLETE, loader_complete);
+		/*loader.addImageLoader("../assets/sheet/light/sheet.png");
+		loader.addUrlLoader("../assets/sheet/light/sheet.xml");
+		center = new Point(85,212);*/
 		loader.addImageLoader("../assets/sheet/explode/sheet.png");
 		loader.addUrlLoader("../assets/sheet/explode/sheet.xml");
-		//loader.addImageLoader("../assets/sheet/smoke/sheet.png");
-		//loader.addUrlLoader("../assets/sheet/smoke/sheet.xml");
+		center = new Point(310,298);
+		/*loader.addImageLoader("../assets/sheet/smoke/sheet.png");
+		loader.addUrlLoader("../assets/sheet/smoke/sheet.xml");
+		center = new Point(265,194);*/
 		loader.start();
 		
 	}
@@ -55,6 +61,7 @@ class TwoDBatchExample extends Sprite
 		bv = new BasicView(200, 200,true);
 		bv.instance3Ds[0].camera = new Camera3D(200, 200, bv.instance3Ds[0],true);
 		bv.instance3Ds[0].camera.frustumPlanes = null;
+		bv.instance3Ds[0].culling = Context3DTriangleFace.NONE;
 		addChild(bv);
 		bv.instance3Ds[0].addEventListener(Event.CONTEXT3D_CREATE, context3dCreate);
 		addChild(new Stats());
@@ -69,27 +76,33 @@ class TwoDBatchExample extends Sprite
 		textureset.setBmd(bmd,Context3DTextureFormat.BGRA);
 		node.material = new TwoDBatchMaterial(textureset.texture,bv.instance3Ds[0]);
 		bv.instance3Ds[0].root.add(node);
+		var td:TDSpriteData= TDSpriteData.create1(bmd, xml, center);
 		
-		var td:TDSpriteData= TDSpriteData.create1(bmd, xml, new Point(300,300));
-		
-		var c:Int = 10;
+		var c:Int = 1030;
 		while (c-->0) {
 			var player:Node3D = new Node3D();
-			
-			player.x = stage.stageWidth*(Math.random()-.5);
-			player.y = stage.stageHeight * (Math.random() - .5);
+			//player.x = stage.stageWidth/2;
+			//player.y = stage.stageHeight/2;
+			player.x = stage.stageWidth*(Math.random());
+			player.y = stage.stageHeight * (Math.random());
 			node.add(player);
 			var twoDNode:Node3D = new Node3D();
 			player.add(twoDNode);
 			var twoD:TwoDData = new TwoDData();
 			twoD.anmCtrl = new TwoDBatAnmCtrl();
-			twoD.anmCtrl.speed = .1+Math.random()*.1;
+			//twoD.anmCtrl.frameScript = randomPos;
+			twoD.anmCtrl.speed = .2/*+Math.random()*.1*/;
 			twoD.anmCtrl.data = td;
 			twoD.anmCtrl.node3d = twoDNode;
 			twoDNode.twoDData = twoD;
 		}
 		
 		addEventListener(Event.ENTER_FRAME, enterFrame);
+	}
+	
+	private function randomPos(ctrl:TwoDBatAnmCtrl):Void {
+		ctrl.node3d.parent.x= stage.stageWidth*(Math.random());
+		ctrl.node3d.parent.y= stage.stageHeight*(Math.random());
 	}
 	
 	private function enterFrame(e:Event):Void 

@@ -3,6 +3,7 @@ package ;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display3D.Context3DTextureFormat;
+	import flash.display3D.Context3DTriangleFace;
 	import flash.display3D.textures.TextureBase;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -50,12 +51,13 @@ package ;
 		{
 			super();
 			rnode = new Node3D();
-			bv = new BasicView(400, 400, true);
-			bv.instance3Ds[0].camera = new Camera3D(400, 400,bv.instance3Ds[0], true);
+			bv = new BasicView(200, 200, false);
+			bv.instance3Ds[0].camera = new Camera3D(400, 400, bv.instance3Ds[0], true);
+			bv.instance3Ds[0].culling = Context3DTriangleFace.NONE;
 			addChild(bv);
 			bv.instance3Ds[0].addEventListener(Event.CONTEXT3D_CREATE, initializeScene);
 			#if flash
-			addChild(new Stats());
+			//addChild(new Stats());
 			#end
 			label = new TextField();
 			label.autoSize = TextFieldAutoSize.LEFT;
@@ -114,7 +116,7 @@ package ;
 		{
 			label.text = rnode.children.length + " click";
 			//rnode.rotationX+=0.2;
-			rnode.rotationZ += 0.22 ;
+			//rnode.rotationZ += 0.22 ;
 			//bv.instance3D.camera.z +=  Math.sin(count / 150) * 5;
 			//count++;
 			bv.instance3Ds[0].render();
@@ -127,7 +129,12 @@ package ;
 			node.drawAble = drawAble;
 			node.radius = -drawAble.radius * .3;
 			var d:Int = 600;
-			node.setPosition(d * (Math.random() - .5), d * (Math.random() - .5),0.1);
+			if (Math.random()<.3) {
+				node.y = 50;
+			}else if (Math.random()<.3) {
+				node.x = 50;
+			}
+			//node.setPosition(d * (Math.random() - .5), d * (Math.random() - .5),0.1);
 			//node.setRotation(360 * Math.random(), 360 * Math.random(), 360 * Math.random());
 			//node.setScale(3.3, 3.3, 3.3);
 			rnode.add(node);
