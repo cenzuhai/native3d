@@ -7,7 +7,7 @@ A simple gpu  accelerated graphics engine written in haxe.
 
 License
 -------
-You may use native3d under the terms of the MIT License (See [LICENSE](LICENSE)).
+You may use native3d under the terms of the MIT License (See [LICENSE](http://opensource.org/licenses/MIT)).
 
 
 Examples
