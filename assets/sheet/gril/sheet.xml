@@ -1,0 +1,6 @@
+<TextureAtlas imagePath="sheet.png">
+<SubTexture name="player_f0005_sit_a_1.png" fx="0" fy="0" x="0" y="0" width="75" height="100"/>
+<SubTexture name="player_f0005_sit_a_2.png" fx="0" fy="0" x="0" y="102" width="68" height="67"/>
+<SubTexture name="player_f0005_sit_b_1.png" fx="0" fy="0" x="118" y="0" width="34" height="101"/>
+<SubTexture name="player_f0005_sit_b_2.png" fx="0" fy="0" x="77" y="0" width="39" height="95"/>
+</TextureAtlas>

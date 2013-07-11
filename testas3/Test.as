@@ -9,7 +9,7 @@ package
 	import lz.native3d.core.Node3D;
 	import lz.native3d.materials.ColorMaterial;
 	import lz.native3d.meshs.MeshUtils;
-	import net.hires.debug.Stats;
+//	import net.hires.debug.Stats;
 	/**
 	 * ...
 	 * @author lizhi http://matrix3d.github.io/
@@ -39,7 +39,7 @@ package
 			bv.instance3D.camera.z=-100;
 			addEventListener(Event.ENTER_FRAME, enterFrame);
 			
-			addChild(new Stats);
+		//	addChild(new Stats);
 		}
 		
 		private function enterFrame(e:Event):void 

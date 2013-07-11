@@ -13,6 +13,7 @@ import lz.native3d.core.animation.Skin;
 import lz.native3d.core.BasicLight3D;
 import lz.native3d.core.DrawAble3D;
 import lz.native3d.core.IndexBufferSet;
+import lz.native3d.core.Instance3D;
 import lz.native3d.core.Node3D;
 import lz.native3d.core.TextureSet;
 import lz.native3d.core.VertexBufferSet;
@@ -40,7 +41,7 @@ class ColladaParser extends AbsParser
 	public function new(data:Dynamic) 
 	{
 		super(data);
-		texture = new TextureSet();
+		texture = new TextureSet(Instance3D.getInstance());
 		
 	}
 	

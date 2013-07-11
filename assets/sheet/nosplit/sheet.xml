@@ -1,0 +1,10 @@
+<TextureAtlas imagePath="sheet.png">
+	<SubTexture name="大反弹-1.png" x="0" y="1506" width="500" height="500"/>
+	<SubTexture name="大反弹-2.png" x="502" y="1004" width="500" height="500"/>
+	<SubTexture name="大反弹-3.png" x="502" y="502" width="500" height="500"/>
+	<SubTexture name="大反弹-4.png" x="502" y="0" width="500" height="500"/>
+	<SubTexture name="小反弹-1.png" x="502" y="1506" width="500" height="500"/>
+	<SubTexture name="小反弹-2.png" x="0" y="1004" width="500" height="500"/>
+	<SubTexture name="小反弹-3.png" x="0" y="502" width="500" height="500"/>
+	<SubTexture name="小反弹-4.png" x="0" y="0" width="500" height="500"/>
+</TextureAtlas>

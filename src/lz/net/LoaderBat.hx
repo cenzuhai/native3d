@@ -23,9 +23,11 @@ class LoaderBat extends EventDispatcher
 	public var loaderComps:Array<LoaderCell>;
 	public var nowLoader:LoaderCell;
 	public var userData:Dynamic;
-	public function new() 
+	public var isCache:Bool;
+	public function new(isCache:Bool=false) 
 	{
 		super();
+		this.isCache = isCache;
 		loaders = new Array<LoaderCell>();
 		loaderComps = new Array<LoaderCell>();
 	}
@@ -70,6 +72,7 @@ class LoaderBat extends EventDispatcher
 	
 	public function addLoader(loader:LoaderCell, userData:Dynamic = null):LoaderCell {
 		loader.userData = userData;
+		loader.isCache = isCache;
 		loaders.push(loader);
 		return loader;
 	}

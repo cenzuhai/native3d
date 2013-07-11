@@ -101,6 +101,7 @@ package lz.native3d.core;
 			]));
 			perspectiveProjection.appendScale(scale.x, scale.y, scale.z);
 			perspectiveProjection.appendTranslation(cpos.x, cpos.y, cpos.z);
+			invertVersion = -3;
 		}
 		
 		public function resize(width:Int, height:Int):Void {

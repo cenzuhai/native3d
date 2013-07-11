@@ -25,12 +25,22 @@ class LoaderCell extends EventDispatcher
 	public var name:String;
 	public var userData:Dynamic;
 	public var data:Dynamic;
-	public function new() 
+	public var isCache:Bool;
+	public function new(isCache:Bool=false) 
 	{
 		super();
+		this.isCache = isCache;
 	}
 	
 	public function start():Void {
+		if (request!=null) {
+			data = LoaderCacher.getAsset(request.url);
+			if (data!=null) {
+				complete(new Event(Event.COMPLETE));
+				return;
+			}
+		}
+		
 		var ed:EventDispatcher = urlLoader;
 		if (ed == null)
 		ed= loader.contentLoaderInfo;
@@ -91,6 +101,15 @@ class LoaderCell extends EventDispatcher
 	
 	private function complete(e:Event):Void 
 	{
+		if (isCache) {
+			if (urlLoader != null) {
+				if(urlLoader.data!=null)
+				LoaderCacher.addAsset(request.url, urlLoader.data);
+			}else if (loader!=null) {
+				if (loader.content != null)
+				LoaderCacher.addAsset(request.url, cast(loader.content,Bitmap).bitmapData);
+			}
+		}
 		dispatchEvent(e);
 	}
 	

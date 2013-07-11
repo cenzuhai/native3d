@@ -1,7 +1,7 @@
 :user_configuration
 
 :: Path to Flex SDK
-set FLEX_SDK=D:\Program Files\FlashDevelop\Tools\ascsdk
+set FLEX_SDK=D:\Program Files\adobe\air37
 set AUTO_INSTALL_IOS=yes
 
 :: Path to Android SDK

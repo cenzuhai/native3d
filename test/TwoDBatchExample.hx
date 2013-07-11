@@ -1,6 +1,8 @@
 package ;
 import flash.display.BitmapData;
 import flash.display.Sprite;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
 import flash.display3D.Context3DTextureFormat;
 import flash.display3D.Context3DTriangleFace;
 import flash.events.Event;
@@ -38,12 +40,15 @@ class TwoDBatchExample extends Sprite
 		/*loader.addImageLoader("../assets/sheet/light/sheet.png");
 		loader.addUrlLoader("../assets/sheet/light/sheet.xml");
 		center = new Point(85,212);*/
-		loader.addImageLoader("../assets/sheet/explode/sheet.png");
-		loader.addUrlLoader("../assets/sheet/explode/sheet.xml");
+		loader.addImageLoader("../assets/sheet/nosplit/sheet.png");
+		loader.addUrlLoader("../assets/sheet/nosplit/sheet.xml");
 		center = new Point(310,298);
 		/*loader.addImageLoader("../assets/sheet/smoke/sheet.png");
 		loader.addUrlLoader("../assets/sheet/smoke/sheet.xml");
 		center = new Point(265,194);*/
+		/*loader.addImageLoader("../assets/sheet/gril/sheet.png");
+		loader.addUrlLoader("../assets/sheet/gril/sheet.xml");
+		center = new Point(40,40);*/
 		loader.start();
 		
 	}
@@ -78,7 +83,7 @@ class TwoDBatchExample extends Sprite
 		bv.instance3Ds[0].root.add(node);
 		var td:TDSpriteData= TDSpriteData.create1(bmd, xml, center);
 		
-		var c:Int = 1030;
+		var c:Int = 3000;
 		while (c-->0) {
 			var player:Node3D = new Node3D();
 			//player.x = stage.stageWidth/2;

@@ -34,8 +34,10 @@ package lz.native3d.core.twoDAnimation ;
 					if (sub.nodeName == "SubTexture") {
 						var frame:TDFrame = new TDFrame();
 						frame.matrix = new Matrix3D();
-						frame.offset.x = Std.parseFloat(sub.get("fx")) - center.x;
-						frame.offset.y = Std.parseFloat(sub.get("fy")) - center.y;
+						var fxs:String = sub.get("fx");
+						var fys:String = sub.get("fy");
+						frame.offset.x =fxs!=null?Std.parseFloat(fxs):0 - center.x;
+						frame.offset.y = fys!=null?Std.parseFloat(fys):0 - center.y;
 						var x:Float = Std.parseFloat(sub.get("x"));
 						var y:Float = Std.parseFloat(sub.get("y"));
 						frame.size.x = Std.parseFloat(sub.get("width"));

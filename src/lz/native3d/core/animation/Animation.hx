@@ -227,11 +227,11 @@ class Animation
 				
 				newWeights.length = newMatrixIndexs.length = newVs.length = (maxNowi + 1) * 3;
 				newUVs.length = (maxNowi + 1) * 2;
-				skinDrawAble.weightBuff = new VertexBufferSet(Std.int(newWeights.length/maxWeightLen), Std.int(maxWeightLen), newWeights, 0);
-				skinDrawAble.matrixBuff = new VertexBufferSet(Std.int(newWeights.length / maxWeightLen), Std.int(maxWeightLen), newMatrixIndexs, 0);
-				skinDrawAble.xyz = new VertexBufferSet(Std.int(newVs.length/3), 3, newVs, 0);
-				skinDrawAble.uv = new VertexBufferSet(Std.int(newUVs.length/2), 2, newUVs, 0);
-				skinDrawAble.indexBufferSet = new IndexBufferSet(newIndexs.length, newIndexs, 0);
+				skinDrawAble.weightBuff = new VertexBufferSet(Std.int(newWeights.length/maxWeightLen), Std.int(maxWeightLen), newWeights, 0,Instance3D.getInstance());
+				skinDrawAble.matrixBuff = new VertexBufferSet(Std.int(newWeights.length / maxWeightLen), Std.int(maxWeightLen), newMatrixIndexs, 0,Instance3D.getInstance());
+				skinDrawAble.xyz = new VertexBufferSet(Std.int(newVs.length/3), 3, newVs, 0,Instance3D.getInstance());
+				skinDrawAble.uv = new VertexBufferSet(Std.int(newUVs.length/2), 2, newUVs, 0,Instance3D.getInstance());
+				skinDrawAble.indexBufferSet = new IndexBufferSet(newIndexs.length, newIndexs, 0,Instance3D.getInstance());
 				MeshUtils.computeNorm(skinDrawAble);
 				skinDrawAble.material = new SkinMaterial(skin, Std.random(0xffffff), Std.random(0xffffff), new BasicLight3D());
 				skinDrawAble.xyz.init();

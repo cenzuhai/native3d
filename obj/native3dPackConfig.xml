@@ -6,15 +6,15 @@
   <compiler>
     <define append="true">
       <name>CONFIG::debug</name>
-      <value>true</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::release</name>
       <value>false</value>
     </define>
     <define append="true">
+      <name>CONFIG::release</name>
+      <value>true</value>
+    </define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'2013/4/26'</value>
+      <value>'2013/6/26'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -28,10 +28,10 @@
       <name>CONFIG::desktop</name>
       <value>false</value>
     </define>
-    <verbose-stacktraces>true</verbose-stacktraces>
+    <optimize>true</optimize>
+    <verbose-stacktraces>false</verbose-stacktraces>
     <source-path append="true">
-      <path-element>F:\e\as\native3d\trunk\haxe\src</path-element>
-      <path-element>F:\TDDownload\azoth105\azoth105\as3class</path-element>
+      <path-element>D:\native3d\src</path-element>
       <path-element>C:\Program Files\mrdoob-Hi-ReS-Stats-ad6da5d\src</path-element>
       <path-element>D:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
