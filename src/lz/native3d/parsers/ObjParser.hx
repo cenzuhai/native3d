@@ -13,6 +13,7 @@ import haxe.Timer;
 import lz.native3d.core.BasicLight3D;
 import lz.native3d.core.DrawAble3D;
 import lz.native3d.core.IndexBufferSet;
+import lz.native3d.core.Instance3D;
 import lz.native3d.core.Node3D;
 import lz.native3d.core.TextureSet;
 import lz.native3d.core.VertexBufferSet;
@@ -41,9 +42,11 @@ class ObjParser extends AbsParser
 	public var mitName:String;
 	private var mit2Color:Map<String,String>;
 	public var textureUrl:String;
-	public function new(data:Dynamic,mitName:String,textureUrl:String) 
+	public var i3d:Instance3D;
+	public function new(data:Dynamic,mitName:String,textureUrl:String,i3d:Instance3D) 
 	{
 		super(data);
+		this.i3d = i3d;
 		this.mitName = mitName;
 		this.textureUrl = textureUrl;
 	}
@@ -154,12 +157,12 @@ class ObjParser extends AbsParser
 			}
 			
 			var drawable:DrawAble3D = new DrawAble3D();
-			drawable.indexBufferSet = new IndexBufferSet(index.length, index, 0);
-			drawable.xyz = new VertexBufferSet(untyped(newv.length/3), 3, newv, 0);
-			drawable.uv = new VertexBufferSet(untyped(newvt.length/2), 2, newvt, 0);
+			drawable.indexBufferSet = new IndexBufferSet(index.length, index, 0,i3d);
+			drawable.xyz = new VertexBufferSet(untyped(newv.length/3), 3, newv, 0,i3d);
+			drawable.uv = new VertexBufferSet(untyped(newvt.length/2), 2, newvt, 0,i3d);
 			MeshUtils.computeNorm(drawable);
 			node.node.drawAble = drawable;
-			node.node.material = new ImageMaterial(TextureSet.getTempTexture(), 0x808080,0x808080, new BasicLight3D());
+			node.node.material = new ImageMaterial(TextureSet.getTempTexture(i3d), 0x808080,0x808080, new BasicLight3D(),i3d);
 			this.node.add(node.node);
 		}
 		dispatchEvent(new Event(Event.COMPLETE));
@@ -181,15 +184,15 @@ class ObjParser extends AbsParser
 			if (image == null) {
 				continue;
 			}
-			var set:TextureSet = new TextureSet();
+			var set:TextureSet = new TextureSet(i3d);
 			set.setBmd(image, Context3DTextureFormat.BGRA);
 			cast( mit2node.get(key).node.material, ImageMaterial).texture = set.texture;
 		}
 	}
 	
 	private function getTexture(mtl:String):TextureBase {
-		return TextureSet.getTempTexture();
-		var texture:TextureSet = new TextureSet();
+		return TextureSet.getTempTexture(i3d);
+		var texture:TextureSet = new TextureSet(i3d);
 		return texture.texture;
 	}
 	

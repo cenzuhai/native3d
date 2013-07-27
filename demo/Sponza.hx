@@ -42,7 +42,7 @@ class Sponza extends Sprite
 	
 	private function bv_context3dCreate(e:Event):Void 
 	{
-		parser = new ObjParser(null,"sponza.mtl","../assets/model/sponza_texture");
+		parser = new ObjParser(null,"sponza.mtl","../assets/model/sponza_texture",bv.instance3Ds[0]);
 		parser.addEventListener(Event.COMPLETE, parser_complete);
 		parser.fromUrlZip("../assets/model/sponza_obj.zip","sponza.obj");
 		addEventListener(Event.ENTER_FRAME, enterFrame);

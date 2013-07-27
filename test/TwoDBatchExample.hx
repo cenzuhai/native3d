@@ -35,14 +35,14 @@ class TwoDBatchExample extends Sprite
 	public function new() 
 	{
 		super();
+		center = new Point(310,298);
 		var loader:LoaderBat = new LoaderBat();
 		loader.addEventListener(Event.COMPLETE, loader_complete);
+		loader.addImageLoader("../assets/sheet/explode/sheet.png");
+		loader.addUrlLoader("../assets/sheet/explode/sheet.xml");
 		/*loader.addImageLoader("../assets/sheet/light/sheet.png");
 		loader.addUrlLoader("../assets/sheet/light/sheet.xml");
-		center = new Point(85,212);*/
-		loader.addImageLoader("../assets/sheet/nosplit/sheet.png");
-		loader.addUrlLoader("../assets/sheet/nosplit/sheet.xml");
-		center = new Point(310,298);
+		center = new Point(85,212);
 		/*loader.addImageLoader("../assets/sheet/smoke/sheet.png");
 		loader.addUrlLoader("../assets/sheet/smoke/sheet.xml");
 		center = new Point(265,194);*/
@@ -83,13 +83,13 @@ class TwoDBatchExample extends Sprite
 		bv.instance3Ds[0].root.add(node);
 		var td:TDSpriteData= TDSpriteData.create1(bmd, xml, center);
 		
-		var c:Int = 3000;
+		var c:Int = 1000;
 		while (c-->0) {
 			var player:Node3D = new Node3D();
 			//player.x = stage.stageWidth/2;
 			//player.y = stage.stageHeight/2;
-			player.x = stage.stageWidth*(Math.random());
-			player.y = stage.stageHeight * (Math.random());
+			player.x =  stage.stageWidth * (Math.random());
+			player.y =  stage.stageHeight * (Math.random());
 			node.add(player);
 			var twoDNode:Node3D = new Node3D();
 			player.add(twoDNode);
