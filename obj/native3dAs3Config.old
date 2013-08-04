@@ -6,11 +6,11 @@
   <compiler>
     <define append="true">
       <name>CONFIG::debug</name>
-      <value>true</value>
+      <value>false</value>
     </define>
     <define append="true">
       <name>CONFIG::release</name>
-      <value>false</value>
+      <value>true</value>
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
@@ -28,7 +28,8 @@
       <name>CONFIG::desktop</name>
       <value>false</value>
     </define>
-    <verbose-stacktraces>true</verbose-stacktraces>
+    <optimize>true</optimize>
+    <verbose-stacktraces>false</verbose-stacktraces>
     <source-path append="true">
       <path-element>D:\project\native3d\testas3</path-element>
       <path-element>D:\project\Hi-ReS-Stats-master\src</path-element>
@@ -36,10 +37,11 @@
     </source-path>
     <library-path append="true">
       <path-element>D:\project\native3d\lib\native3dHaxe.swc</path-element>
+      <path-element>D:\project\native3d\lib\Bullet.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\project\native3d\testas3\Main.as</path-element>
+    <path-element>D:\project\native3d\testas3\BulletTest.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>60</default-frame-rate>
