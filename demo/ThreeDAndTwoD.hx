@@ -109,7 +109,7 @@ package ;
 				#if flash
 				addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 				#else
-				nme.display3D.Context3DUtils.setRenderCallback(i3d.c3d, enterFrameHandler);
+				flash.display3D.Context3DUtils.setRenderCallback(i3d.c3d, enterFrameHandler);
 				i3d.camera.frustumPlanes = null;
 				i3d.c3d.setBlendFactors
 				#end
