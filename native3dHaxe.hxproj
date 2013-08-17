@@ -24,7 +24,7 @@
   <build>
     <option directives="" />
     <option flashStrict="False" />
-    <option mainClass="SkyboxExample" />
+    <option mainClass="TeapotsExample" />
     <option enabledebug="True" />
     <option additional="-lib format&#xA;" />
   </build>
@@ -38,7 +38,7 @@
     <compile path="demo\ObjExample.hx" />
     <compile path="test\TestAs3.hx" />
     <compile path="test\LineExample.hx" />
-    <compile path="test\SkyboxExample.hx" />
+    <compile path="test\TeapotsExample.hx" />
   </compileTargets>
   <!-- Assets to embed into the output SWF -->
   <library>

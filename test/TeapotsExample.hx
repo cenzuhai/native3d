@@ -103,7 +103,6 @@ package ;
 			#else
 			flash.display3D.Context3DUtils.setRenderCallback(bv.instance3Ds[0].c3d, enterFrameHandler);
 			bv.instance3Ds[0].camera.frustumPlanes = null;
-			bv.instance3Ds[0].c3d.setBlendFactors
 			#end
 			bv.instance3Ds[0].camera.z = -1300;
 		}

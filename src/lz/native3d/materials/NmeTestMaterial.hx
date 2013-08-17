@@ -6,10 +6,10 @@ import lz.native3d.core.BasicPass3D;
 import lz.native3d.core.Instance3D;
 import lz.native3d.core.Node3D;
 import lz.native3d.utils.Color;
-import nme.display3D.Context3DProgramType;
-import nme.display3D.shaders.glsl.GLSLFragmentShader;
-import nme.display3D.shaders.glsl.GLSLProgram;
-import nme.display3D.shaders.glsl.GLSLVertexShader;
+import flash.display3D.Context3DProgramType;
+//import flash.display3D.shaders.glsl.GLSLFragmentShader;
+//import openfl.display3D.shaders.glsl.GLSLProgram;
+//import flash.display3D.shaders.glsl.GLSLVertexShader;
 
 /**
  * ...
@@ -18,7 +18,7 @@ import nme.display3D.shaders.glsl.GLSLVertexShader;
 class NmeTestMaterial
 {
 
-	static var glslProgram : GLSLProgram;
+	static var glslProgram :GLSLProgram;
 	 private var lightNode:BasicLight3D;
 	 var fragment:Vector<Float>;
 	 var vertex:Vector<Float>;
@@ -37,7 +37,7 @@ class NmeTestMaterial
 		glslProgram.attach();
 		glslProgram.setVertexUniformFromMatrix("mpos", node.worldMatrix, true);
 		glslProgram.setVertexUniformFromMatrix("mproj", pass.camera.perspectiveProjectionMatirx, true);
-		glslProgram.setVertexBufferAt("pos", node.drawAble.xyz.vertexBuff, 0, nme.display3D.Context3DVertexBufferFormat.FLOAT_3);
+		glslProgram.setVertexBufferAt("pos", node.drawAble.xyz.vertexBuff, 0, flash.display3D.Context3DVertexBufferFormat.FLOAT_3);
 		//glslProgram.setVertexBufferAt("norm", node.drawAble.norm.vertexBuff, 0, nme.display3D.Context3DVertexBufferFormat.FLOAT_3);
 		//vertex[0] = lightNode.worldRawData[12];
 		//vertex[1] = lightNode.worldRawData[13];
