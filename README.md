@@ -12,7 +12,7 @@ You may use native3d under the terms of the MIT License (See [LICENSE](http://op
 
 Examples
 --------
-1. [tests](http://native3d.googlecode.com/svn/swfs/haxe/)
+1. [bullet 3d](http://matrix3d.github.io/as3/2013/08/06/bullet-3d/)
 
 
 ``` as

@@ -22,7 +22,7 @@ class PhongShader extends Shader
 			LightPosition:Float3,
 			gl_ModelViewMatrix:M44,
 			//gl_NormalMatrix:M44,
-			gl_ModelViewProjectionMatrix:M44
+			gl_ProjectionMatrix:M44
 		){
 			var eyespacePos   = (input.gl_Vertex*gl_ModelViewMatrix).xyz;
 
@@ -32,7 +32,7 @@ class PhongShader extends Shader
 			LightVec = lightVec;
 			ViewVec            = normalize(-eyespacePos);
 			ReflectedLightVec  = normalize(2* dot(lightVec, surfaceNormal)* surfaceNormal-lightVec);
-			out = input.gl_Vertex.xyzw*gl_ModelViewMatrix*gl_ModelViewProjectionMatrix;
+			out = input.gl_Vertex.xyzw*gl_ModelViewMatrix*gl_ProjectionMatrix;
 		}
 		
 		function fragment(

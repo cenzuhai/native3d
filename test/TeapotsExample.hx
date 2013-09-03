@@ -77,8 +77,8 @@ package ;
 		
 		public function initializeScene(e:Event) : Void
 		{
-			//drawAble = MeshUtils.createCube(30,bv.instance3Ds[0]);
-			drawAble = MeshUtils.createTeaPot(bv.instance3Ds[0]);
+			drawAble = MeshUtils.createCube(30,bv.instance3Ds[0]);
+			//drawAble = MeshUtils.createTeaPot(bv.instance3Ds[0]);
 			//drawAble = MeshUtils.createPlane(10);
 			var textureset:TextureSet = new TextureSet(bv.instance3Ds[0]);
 			var bmd:BitmapData = new BitmapData(128, 128, true);
@@ -95,7 +95,7 @@ package ;
 			light.z = -200;
 			//light.material = new ColorMaterial(new Vector3D(Math.random() / 5, Math.random() / 5, Math.random() / 5, 1), new Vector3D(Math.random(), Math.random(), Math.random(), 1), new BasicLight3D());
 			
-			var c:Int = 5000;
+			var c:Int = 50;
 			while (c-->0) {
 				addCube();
 			}

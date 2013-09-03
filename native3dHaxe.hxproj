@@ -24,7 +24,7 @@
   <build>
     <option directives="" />
     <option flashStrict="False" />
-    <option mainClass="TeapotsExample" />
+    <option mainClass="SkeletonAnimationExample" />
     <option enabledebug="True" />
     <option additional="-lib format&#xA;-D shaderCompDebug&#xA;" />
   </build>
@@ -38,7 +38,7 @@
     <compile path="demo\ObjExample.hx" />
     <compile path="test\TestAs3.hx" />
     <compile path="test\LineExample.hx" />
-    <compile path="test\TeapotsExample.hx" />
+    <compile path="test\SkeletonAnimationExample.hx" />
   </compileTargets>
   <!-- Assets to embed into the output SWF -->
   <library>
@@ -46,7 +46,7 @@
   </library>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <!-- example: <hidden path="..." /> -->
+    <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
@@ -56,6 +56,7 @@
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="Default" />
+    <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->
   <storage />

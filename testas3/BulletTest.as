@@ -1,13 +1,15 @@
 package 
 {
-	import com.adobe.AGALOptimiser.agal.AgalParser;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Vector3D;
 	import lz.native3d.core.BasicLight3D;
 	import lz.native3d.core.BasicView;
 	import lz.native3d.core.DrawAble3D;
 	import lz.native3d.core.Node3D;
+	import lz.native3d.ctrls.FirstPersonCtrl;
 	import lz.native3d.materials.ColorMaterial;
+	import lz.native3d.materials.PhongMaterial;
 	import lz.native3d.meshs.MeshUtils;
 	import net.hires.debug.Stats;
 	import org.bulletphysics.btBoxShape;
@@ -29,6 +31,7 @@ package
 	 * ...
 	 * @author lizhi http://matrix3d.github.io/
 	 */
+	[SWF(width = "400",height="400" )]
 	public class BulletTest extends Sprite
 	{
 		private var bv:BasicView;
@@ -54,7 +57,6 @@ package
 		
 		private function init(e:Event = null):void 
 		{
-			AgalParser
 			CModule.rootSprite = this;
 			if (CModule.runningAsWorker()) {
 				return;
@@ -75,8 +77,11 @@ package
 			bv.instance3Ds[0].root.add(light);
 			light.x = 100;
 			light.y = 50;
-			bv.instance3Ds[0].camera.z = -150;
+			light.z = -100;
+			bv.instance3Ds[0].camera.z = -100;
 			bv.instance3Ds[0].camera.y = 30;
+			
+			//new FirstPersonCtrl(stage, bv.instance3Ds[0].camera);
 			createWorld();
 			addEventListener(Event.ENTER_FRAME, enterFrame);
 		}
@@ -180,7 +185,11 @@ package
 			node.frustumCulling = null;
 			node.drawAble = cubeDA;
 			node.setScale(w/2, h/2, d/2);
-			node.set_material(new ColorMaterial(0xffffff*Math.random(),0xffffff*Math.random(),light));
+			node.set_material( new PhongMaterial(bv.instance3Ds[0], light,
+			new Vector3D(.2,.2,.2),
+			new Vector3D(Math.random()/2+.5,Math.random()/2+.5,Math.random()/2+.5),
+			new Vector3D(.8,.8,.8),
+			200));
 			bv.instance3Ds[0].root.add(node);
 			return node;
 		}
