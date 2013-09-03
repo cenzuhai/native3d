@@ -2,6 +2,7 @@ package lz.native3d.core ;
 //{
 	import flash.display3D.Context3DCompareMode;
 	import flash.display3D.textures.TextureBase;
+	import flash.geom.Vector3D;
 	import flash.Vector;
 	#if flash
 	import lz.native3d.materials.MaterialBase;
@@ -29,9 +30,9 @@ package lz.native3d.core ;
 			if (target!=null) {
 				target.pass(this, nodes);
 			}else{
-				i3d.c3d.clear(0,0,0,0);
+				i3d.c3d.clear(0, 0, 0, 0);
 				for(i in 0...nodes.length) {
-				var node:Node3D = nodes[i];
+					var node:Node3D = nodes[i];
 					doPass(node);
 				}
 			}

@@ -1,5 +1,6 @@
 package 
 {
+	import com.adobe.AGALOptimiser.agal.AgalParser;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import lz.native3d.core.BasicLight3D;
@@ -53,6 +54,7 @@ package
 		
 		private function init(e:Event = null):void 
 		{
+			AgalParser
 			CModule.rootSprite = this;
 			if (CModule.runningAsWorker()) {
 				return;

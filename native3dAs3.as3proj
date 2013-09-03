@@ -12,7 +12,6 @@
     <movie minorVersion="5" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
-    <movie preferredSDK="AIR 3.7.0;3.7.0;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -54,6 +53,7 @@
   <libraryPaths>
     <element path="lib\native3dHaxe.swc" />
     <element path="lib\Bullet.swc" />
+    <element path="lib\glsl2agal.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

@@ -26,7 +26,7 @@
     <option flashStrict="False" />
     <option mainClass="TeapotsExample" />
     <option enabledebug="True" />
-    <option additional="-lib format&#xA;" />
+    <option additional="-lib format&#xA;-D shaderCompDebug&#xA;" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

@@ -17,6 +17,7 @@ package ;
 	import lz.native3d.core.DrawAble3D;
 	import lz.native3d.core.Node3D;
 	import lz.native3d.core.TextureSet;
+	import lz.native3d.materials.PhongMaterial;
 	import lz.native3d.meshs.MeshUtils;
 	#if flash
 	import net.hires.debug.Stats;
@@ -76,8 +77,8 @@ package ;
 		
 		public function initializeScene(e:Event) : Void
 		{
-			drawAble = MeshUtils.createCube(5,bv.instance3Ds[0]);
-			//drawAble = MeshUtils.createTeaPot();
+			//drawAble = MeshUtils.createCube(30,bv.instance3Ds[0]);
+			drawAble = MeshUtils.createTeaPot(bv.instance3Ds[0]);
 			//drawAble = MeshUtils.createPlane(10);
 			var textureset:TextureSet = new TextureSet(bv.instance3Ds[0]);
 			var bmd:BitmapData = new BitmapData(128, 128, true);
@@ -91,6 +92,7 @@ package ;
 			bv.instance3Ds[0].lights.push(light);
 			light.x = 100;
 			light.y = 50;
+			light.z = -200;
 			//light.material = new ColorMaterial(new Vector3D(Math.random() / 5, Math.random() / 5, Math.random() / 5, 1), new Vector3D(Math.random(), Math.random(), Math.random(), 1), new BasicLight3D());
 			
 			var c:Int = 5000;
@@ -112,7 +114,7 @@ package ;
 			label.text = rnode.children.length + " click";
 			rnode.rotationX+=0.2;
 			rnode.rotationZ += 0.22 ;
-			bv.instance3Ds[0].camera.z +=  Math.sin(count / 150) * 5;
+			//bv.instance3Ds[0].camera.z +=  Math.sin(count / 150) * 5;
 			count++;
 			bv.instance3Ds[0].render();
 		}
@@ -126,7 +128,7 @@ package ;
 			var d:Int = 600;
 			node.setPosition(d * (Math.random() - .5), d * (Math.random() - .5),d * (Math.random() - .5));
 			node.setRotation(360 * Math.random(), 360 * Math.random(), 360 * Math.random());
-			//node.setScale(3.3, 3.3, 3.3);
+			node.setScale(2,2,2);
 			rnode.add(node);
 			var ml:BasicLight3D=light;
 			if (light == null) {
@@ -134,9 +136,14 @@ package ;
 			}
 			
 			#if flash
-			node.material = Math.random() < 1?
+			node.material = new PhongMaterial(bv.instance3Ds[0], ml,
+			new Vector3D(.2,.2,.2),
+			new Vector3D(Math.random()/2+.5,Math.random()/2+.5,Math.random()/2+.5),
+			new Vector3D(.8,.8,.8),
+			200);
+			/*node.material = Math.random() < 1?
 			new ColorMaterial(Std.random(0xffffff), Std.random(0xffffff), ml):
-				new ImageMaterial(texture, Std.random(0xffffff), Std.random(0xffffff), ml,bv.instance3Ds[0]);
+			new ImageMaterial(texture, Std.random(0xffffff), Std.random(0xffffff), ml,bv.instance3Ds[0]);*/
 			#else
 			node.material = new NmeTestMaterial(Std.random(0xffffff),0,light);
 			node.material.init(node);

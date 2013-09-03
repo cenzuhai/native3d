@@ -19,7 +19,6 @@ import lz.native3d.parsers.AbsParser;
 import lz.native3d.parsers.ColladaParser;
 import lz.net.LoaderBat;
 import net.hires.debug.Stats;
-import nochump.util.zip.Inflater;
 
 /**
  * ...

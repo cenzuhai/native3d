@@ -24,19 +24,19 @@ package
 		{
 			bv = new BasicView(1,1,true);
 			addChild(bv);
-			bv.instance3D.addEventListener(Event.CONTEXT3D_CREATE, instance3D_context3dCreate);
+			bv.instance3Ds[0].addEventListener(Event.CONTEXT3D_CREATE, instance3D_context3dCreate);
 		}
 		
 		private function instance3D_context3dCreate(e:Event):void 
 		{
-			drawAble = MeshUtils.createTeaPot();
+			drawAble = MeshUtils.createTeaPot(bv.instance3Ds[0]);
 			node = new Node3D;
 			node.radius = -drawAble.radius;
 			node.drawAble = drawAble;
-			bv.instance3D.root.add(node);
+			bv.instance3Ds[0].root.add(node);
 			node.set_material(new ColorMaterial(0xffffff*Math.random(), 0xffffff*Math.random(), new BasicLight3D));
 			
-			bv.instance3D.camera.z=-100;
+			bv.instance3Ds[0].camera.z=-100;
 			addEventListener(Event.ENTER_FRAME, enterFrame);
 			
 		//	addChild(new Stats);
@@ -50,7 +50,7 @@ package
 			node.z =  node.y;
 			node.rotationX += .2;
 			node.rotationY += .4;
-			bv.instance3D.render();
+			bv.instance3Ds[0].render();
 		}
 		
 	}

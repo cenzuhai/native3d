@@ -20,7 +20,6 @@ import lz.native3d.parsers.ColladaParser;
 import lz.native3d.parsers.ObjParser;
 import lz.net.LoaderBat;
 import net.hires.debug.Stats;
-import nochump.util.zip.Inflater;
 
 /**
  * ...

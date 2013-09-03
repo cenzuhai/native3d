@@ -7,10 +7,9 @@ import lz.native3d.core.Instance3D;
 import lz.native3d.core.Node3D;
 import lz.native3d.utils.Color;
 import flash.display3D.Context3DProgramType;
-//import flash.display3D.shaders.glsl.GLSLFragmentShader;
-//import openfl.display3D.shaders.glsl.GLSLProgram;
-//import flash.display3D.shaders.glsl.GLSLVertexShader;
-
+import flash.display3D.shaders.glsl.GLSLFragmentShader;
+import flash.display3D.shaders.glsl.GLSLProgram;
+import flash.display3D.shaders.glsl.GLSLVertexShader;
 /**
  * ...
  * @author lizhi http://matrix3d.github.io/

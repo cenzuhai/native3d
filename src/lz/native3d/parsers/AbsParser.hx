@@ -15,7 +15,6 @@ import haxe.zip.Entry;
 import haxe.zip.Reader;
 import lz.native3d.core.Node3D;
 import lz.net.LoaderBat;
-import nochump.util.zip.Inflater;
 
 /**
  * ...
@@ -90,10 +89,9 @@ class AbsParser extends EventDispatcher
 	private function getBytes(name:String):ByteArray {
 		for (entry in entrys) {
 			if(entry.fileName==name){
-				var inf:Inflater = new Inflater();
-				inf.setInput(entry.data.getData());
-				var b:ByteArray = new ByteArray();
-				inf.inflate(b);
+				var b:ByteArray = entry.data.getData();
+				b.position = 0;
+				b.inflate();
 				return b;
 			}
 		}
