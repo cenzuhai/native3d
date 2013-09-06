@@ -7,11 +7,10 @@ package
 	import lz.native3d.core.BasicView;
 	import lz.native3d.core.DrawAble3D;
 	import lz.native3d.core.Node3D;
-	import lz.native3d.ctrls.FirstPersonCtrl;
-	import lz.native3d.materials.ColorMaterial;
 	import lz.native3d.materials.PhongMaterial;
 	import lz.native3d.meshs.MeshUtils;
 	import net.hires.debug.Stats;
+	import org.bulletphysics.btAxisSweep3;
 	import org.bulletphysics.btBoxShape;
 	import org.bulletphysics.btCollisionDispatcher;
 	import org.bulletphysics.btDbvtBroadphase;
@@ -94,13 +93,14 @@ package
 			var maxNumOutstandingTasks:int = 2;
 
 			defCollisionInfo = btDefaultCollisionConstructionInfo.create()
-			defCollisionInfo.m_defaultMaxPersistentManifoldPoolSize = 32768;
+			//defCollisionInfo.m_defaultMaxPersistentManifoldPoolSize = 32768;
+			defCollisionInfo.m_defaultMaxPersistentManifoldPoolSize = 1024;
 			collisionConfig = btDefaultCollisionConfiguration.create(defCollisionInfo.swigCPtr)
 
 			dispatcher = btCollisionDispatcher.create(collisionConfig.swigCPtr)
 			solver = btSequentialImpulseConstraintSolver.create()
 
-			broadphase = btDbvtBroadphase.create(0)
+			broadphase =  btDbvtBroadphase.create(0)
 			world = btDiscreteDynamicsWorld.create(dispatcher.swigCPtr, broadphase.swigCPtr, solver.swigCPtr, collisionConfig.swigCPtr)
 			world.setGravity(vector(0, -20, 0))
 
@@ -117,11 +117,15 @@ package
 			var w:Number = 2.0;
 			var s:Number = 4.0;
 			
+			var boxShape:btBoxShape = btBoxShape.create(vector(w , w, w));
 			for(var i:int=0; i<400; i++) {
-				//if(i%7 == 0)
-					//spawnSphere(w, ((i%numCols) ) * 10 - 30, 10.0 + ((i/numCols) * s), 0)
-				//else
-					spawnCube(((i%numCols)) * 10  - 30, 10.0 + ((i/numCols) * s), 0, 10, w*2, w*2, w*2)
+				//spawnCube(((i%numCols)) * 10  - 30, 10.0 + ((i/numCols) * s), 0, 10, w*2, w*2, w*2)
+				spawnRigidBody(
+					boxShape,
+					w*2,w*2,w*2,
+					10,
+					((i%numCols)) * 10  - 30, 10.0 + ((i/numCols) * s), 0
+				)
 			}
 		}
 		
@@ -175,7 +179,7 @@ package
 			for(i=0; i<1; i++)
 				world.stepSimulation(1/60.0, 0, 0)
 
-	        for(i=0; i<meshes.length; i++) {
+	        for (i = 0; i < meshes.length; i++) {
 	        	positionAndRotateMesh(meshes[i], bods[i])
 	        }
 			bv.instance3Ds[0].render();

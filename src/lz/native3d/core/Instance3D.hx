@@ -21,7 +21,11 @@ package lz.native3d.core ;
 		public var lights:Vector<BasicLight3D>;
 		public var width:Int=400;
 		public var height:Int = 400;
+		#if flash
 		public var culling:Context3DTriangleFace;
+		#else
+		public var culling:Int;
+		#end
 		public function new() 
 		{
 			super();	

@@ -24,9 +24,9 @@
   <build>
     <option directives="" />
     <option flashStrict="False" />
-    <option mainClass="SkeletonAnimationExample" />
+    <option mainClass="TeapotsExample" />
     <option enabledebug="True" />
-    <option additional="-lib format&#xA;-D shaderCompDebug&#xA;" />
+    <option additional="-lib format&#xA;-lib hxsl&#xA;-lib openfl-stage3d&#xA;-D shaderCompDebug" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
@@ -38,7 +38,8 @@
     <compile path="demo\ObjExample.hx" />
     <compile path="test\TestAs3.hx" />
     <compile path="test\LineExample.hx" />
-    <compile path="test\SkeletonAnimationExample.hx" />
+    <compile path="test\Test2.hx" />
+    <compile path="test\TeapotsExample.hx" />
   </compileTargets>
   <!-- Assets to embed into the output SWF -->
   <library>

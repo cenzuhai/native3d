@@ -1,77 +1,33 @@
-<?xml version="1.0" encoding="utf-8" ?> 
-<application xmlns="http://ns.adobe.com/air/application/3.7">
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
-	<id>air.native3dHaxe</id>
-	<versionNumber>0.1</versionNumber>
-	<supportedProfiles>mobileDevice</supportedProfiles>
-	<filename>native3dHaxe</filename>
+	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
+	<meta title="Native3dOpenfl" package="Native3dOpenfl" version="1.0.0" company="lizhi" />
 	
-	<name>native3dHaxe</name>
-	<description></description>
-	<copyright></copyright>
+	<!-- output -->
+	<app main="TeapotsExample" file="Native3dOpenfl" path="bin" />
 	
-	<android>
-		<manifestAdditions><![CDATA[
-			
-			<manifest android:installLocation="auto">
-			  <uses-sdk android:minSdkVersion="8"/>
-				<uses-permission android:name="android.permission.INTERNET"/>
-				<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>
-			</manifest>
-			
-		]]></manifestAdditions>
-	</android>
-    <iPhone> 
-        <InfoAdditions><![CDATA[ 
-		
-			<key>UIStatusBarStyle</key> 
-			<string>UIStatusBarStyleBlackOpaque</string> 
-			<key>UIRequiresPersistentWiFi</key> 
-			<string>NO</string>
-			<key>UIPrerenderedIcon</key>  
-			<true/>
-			<key>UIApplicationExitsOnSuspend</key>
-			<true/>
-			
-			<key>MinimumOSVersion</key>
-			<string>4.2</string> 
-			<key>UIDeviceFamily</key>
-			<array>
-				<!-- iPhone support -->
-				<string>1</string> 
-				<!-- iPad support -->
-				<string>2</string>
-			</array>
-				
-        ]]></InfoAdditions> 
-		<requestedDisplayResolution>high</requestedDisplayResolution>
-    </iPhone> 
+	<window background="#000000" fps="60" />
+	<window width="800" height="480" unless="mobile" />
+	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
+	<set value="11.2" name="SWF_VERSION"/>
 	
-	<initialWindow>
-		<title>native3dHaxe</title>
-		<content>native3dHaxe.swf</content>
-		<visible>true</visible>
-		<fullScreen>true</fullScreen>
-		<!--<autoOrients>false</autoOrients>-->
-		<!--<aspectRatio>landscape</aspectRatio>-->
-		<renderMode>direct</renderMode>
-		<depthAndStencil>true</depthAndStencil>
-	</initialWindow>
+	<!-- classpath, haxe libs -->
+	<source path="src" />
+	<source path="test" />
+	<source path="libs" />
+	<haxelib name="format" />
+	<haxelib name="openfl" />
+	<haxelib name="actuate" />
+	<haxelib name="hxsl" />
+	<haxelib name="openfl-stage3d" />
 	
-	<icon>
-	</icon>
+	<!-- assets -->
+	<icon path="assets/openfl.svg" />
+	<assets path="assets/img" rename="img" />
 	
-	<!-- 
-	AIR options:
-	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
+	<!-- optimize output
+	<haxeflag name="-dce full" /> -->
 	
-	AIR mobile options:
-	http://help.adobe.com/en_US/air/build/WSfffb011ac560372f-5d0f4f25128cc9cd0cb-7ffe.html
-	
-	iOS icons guidelines:
-	http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/mobilehig/IconsImages/IconsImages.html
-	
-	Android manifest documentation:
-	http://developer.android.com/guide/topics/manifest/manifest-intro.html
-	-->
-</application>
+</project>

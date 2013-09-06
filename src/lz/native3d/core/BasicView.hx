@@ -7,6 +7,7 @@ package lz.native3d.core ;
 	import flash.display3D.Context3D;
 	import flash.events.Event;
 	import flash.Vector;
+	using OpenFLStage3D;
 	/**
 	 * ...
 	 * @author lizhi http://matrix3d.github.io/
@@ -40,23 +41,30 @@ package lz.native3d.core ;
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStage);
 			for (i in 0...numInstance3d) {
-				stage.stage3Ds[i].addEventListener(Event.CONTEXT3D_CREATE, stage3Ds_context3dCreate);
-				stage.stage3Ds[i].requestContext3D();
+				var stage3d = getStage3d(i);
+				stage3d.addEventListener(Event.CONTEXT3D_CREATE, stage3Ds_context3dCreate);
+				stage3d.requestContext3D();
 			}
 			
 			this.autoSize = autoSize;
 		}
 		
+		inline private function getStage3d(i:Int):Stage3D {
+			return #if flash stage.stage3Ds[i] #else stage.getStage3D(i) #end;
+		}
+		
 		private function stage3Ds_context3dCreate(e:Event):Void 
 		{
 			for (i in 0...numInstance3d) {
-				if (stage.stage3Ds[i].context3D==null) {
+				var stage3d = getStage3d(i);
+				if (stage3d.context3D==null) {
 					return;
 				}
 			}
 			for (i in 0...numInstance3d) {
+				var stage3d = getStage3d(i);
 				var i3d:Instance3D = instance3Ds[i];
-				i3d.init(stage.stage3Ds[i].context3D);
+				i3d.init(stage3d.context3D);
 				i3d.resize(width3d, height3d);
 			}
 		}

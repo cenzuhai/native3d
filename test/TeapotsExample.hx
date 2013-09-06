@@ -2,6 +2,7 @@ package ;
 //{
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.display3D.Context3D;
 	import flash.display3D.Context3DTextureFormat;
 	import flash.display3D.textures.TextureBase;
 	import flash.events.Event;
@@ -21,13 +22,8 @@ package ;
 	import lz.native3d.meshs.MeshUtils;
 	#if flash
 	import net.hires.debug.Stats;
-	import lz.native3d.materials.ColorMaterial;
-	import lz.native3d.materials.DisMaterial;
-	import lz.native3d.materials.ImageMaterial;
-	#else
-	
-	import lz.native3d.materials.NmeTestMaterial;
 	#end
+	using OpenFLStage3D;
 	
 
 	 class TeapotsExample extends Sprite
@@ -82,7 +78,7 @@ package ;
 			//drawAble = MeshUtils.createPlane(10);
 			var textureset:TextureSet = new TextureSet(bv.instance3Ds[0]);
 			var bmd:BitmapData = new BitmapData(128, 128, true);
-			bmd.perlinNoise(50, 50, 2, 1, true, true);
+			bmd.perlinNoise(250, 250, 2, 1, true, true);
 			textureset.setBmd(bmd,Context3DTextureFormat.BGRA);
 			texture = textureset.texture;
 			
@@ -103,13 +99,13 @@ package ;
 			#if flash
 			addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			#else
-			flash.display3D.Context3DUtils.setRenderCallback(bv.instance3Ds[0].c3d, enterFrameHandler);
+			bv.instance3Ds[0].c3d.setRenderCallback( enterFrameHandler);
 			bv.instance3Ds[0].camera.frustumPlanes = null;
 			#end
 			bv.instance3Ds[0].camera.z = -1300;
 		}
 		
-		public function enterFrameHandler(#if flash event : Event #end) : Void
+		public function enterFrameHandler( event : Event) : Void
 		{
 			label.text = rnode.children.length + " click";
 			rnode.rotationX+=0.2;
@@ -134,20 +130,15 @@ package ;
 			if (light == null) {
 				ml = new BasicLight3D();
 			}
-			
-			#if flash
 			node.material = new PhongMaterial(bv.instance3Ds[0], ml,
-			new Vector3D(.2,.2,.2),
-			new Vector3D(Math.random()/2+.5,Math.random()/2+.5,Math.random()/2+.5),
-			new Vector3D(.8,.8,.8),
-			200);
-			/*node.material = Math.random() < 1?
-			new ColorMaterial(Std.random(0xffffff), Std.random(0xffffff), ml):
-			new ImageMaterial(texture, Std.random(0xffffff), Std.random(0xffffff), ml,bv.instance3Ds[0]);*/
-			#else
-			node.material = new NmeTestMaterial(Std.random(0xffffff),0,light);
-			node.material.init(node);
-			#end
+			new Vector3D(.2, .2, .2),//AmbientColor
+			//null,
+			new Vector3D(Math.random()/2+.5,Math.random()/2+.5,Math.random()/2+.5),//DiffuseColor
+			new Vector3D(.8,.8,.8),//SpecularColor
+			200,
+			null
+			//texture
+			);
 			
 			return node;
 		}

@@ -5,12 +5,7 @@ package lz.native3d.core ;
 	import flash.Lib;
 	import flash.Vector;
 	import lz.native3d.core.animation.Skin;
-	#if flash
 	import lz.native3d.materials.MaterialBase;
-	import lz.native3d.materials.SkinMaterial;
-	#else
-	import lz.native3d.materials.NmeTestMaterial;
-	#end
 	import lz.native3d.utils.Color;
 	//import lz.native3d.ns.native3d;
 	//use namespace native3d;
@@ -59,12 +54,8 @@ package lz.native3d.core ;
 		public var worldVersion:Int = -123;
 		public var drawAble:DrawAble3D;
 		
-		#if flash
 		private var _material:MaterialBase;
 		public var material(get_material, set_material):MaterialBase;
-		#else
-		public var material:NmeTestMaterial;
-		#end
 		
 		/**@getter,setter**/
 		#if swc @:extern #end public var x(get_x,set_x):Float;
@@ -247,7 +238,6 @@ package lz.native3d.core ;
 			return scale.z = value;
 		}
 		
-		#if flash
 		private function get_material():MaterialBase 
 		{
 			return _material;
@@ -260,7 +250,6 @@ package lz.native3d.core ;
 			value.init(this);
 			return _material;
 		}
-		#end
 		
 		inline public function setPosition(x:Float, y:Float, z:Float):Void {
 			this.x = x;
@@ -306,15 +295,7 @@ package lz.native3d.core ;
 			node.worldVersion = worldVersion;
 			node.drawAble = drawAble;
 			
-			#if flash
-			if (Std.is(material,SkinMaterial)) {
-				var m:SkinMaterial = cast(material, SkinMaterial);
-				var m2:SkinMaterial = new SkinMaterial(m.skin, Std.random(0xffffff), Std.random(0xffffff), m.lightNode);
-				node.material = m2;
-			}else {
-				node.material = material;
-			}
-			#end
+			node.material = material;
 			
 			for (child in children) {
 				if (child.type != JOINT_TYPE) {

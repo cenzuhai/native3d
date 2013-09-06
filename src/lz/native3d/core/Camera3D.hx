@@ -93,12 +93,17 @@ package lz.native3d.core;
 			_zNear = zNear;
 			cscale = scale;
 			cpos = pos;
-			perspectiveProjection.copyRawDataFrom(Vector.ofArray([
+			var rawData =Vector.ofArray([
 				2.0/width, 0.0, 0.0, 0.0,
 				0.0, 2.0/height, 0.0, 0.0,
 				0.0, 0.0, 1.0/(zFar-zNear), 0.0,
 				0.0, 0.0, zNear/(zNear-zFar), 1.0
-			]));
+			]);
+			#if flash
+			perspectiveProjection.copyRawDataFrom(rawData);
+			#else
+			perspectiveProjection.rawData = rawData;
+			#end
 			perspectiveProjection.appendScale(scale.x, scale.y, scale.z);
 			perspectiveProjection.appendTranslation(cpos.x, cpos.y, cpos.z);
 			invertVersion = -3;
