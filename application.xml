@@ -3,7 +3,7 @@
 	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
 	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
-	<meta title="Native3dOpenfl" package="Native3dOpenfl" version="1.0.0" company="lizhi" />
+	<meta title="Native3dOpenfl" package="lz.native3d.Native3dOpenfl" version="1.0.0" company="lizhi" />
 	
 	<!-- output -->
 	<app main="TeapotsExample" file="Native3dOpenfl" path="bin" />

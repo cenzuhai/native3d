@@ -11,7 +11,7 @@
     <movie version="3" />
     <movie minorVersion="0" />
     <movie platform="NME" />
-    <movie background="000000" />
+    <movie background="#000000" />
     <movie preferredSDK=";3;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -19,15 +19,15 @@
     <class path="src" />
     <class path="test" />
     <class path="libs" />
-    <class path="bin\flash\haxe" />
+    <class path="bin\android\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="tools=1&#xA;openfl_ver=1.0.8&#xA;openfl&#xA;display&#xA;web" />
+    <option directives="tools=1&#xA;openfl_ver=1.0.8&#xA;openfl&#xA;display&#xA;android&#xA;mobile&#xA;android" />
     <option flashStrict="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="--no-output&#xA;-swf-version 11.2&#xA;#--remap nme:flash" />
+    <option additional="--no-output&#xA;--macro allowPackage(&quot;flash&quot;)" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

@@ -20,6 +20,7 @@ package ;
 	import lz.native3d.core.TextureSet;
 	import lz.native3d.materials.PhongMaterial;
 	import lz.native3d.meshs.MeshUtils;
+	import openfl.display.FPS;
 	#if flash
 	import net.hires.debug.Stats;
 	#end
