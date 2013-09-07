@@ -127,11 +127,6 @@ class PhongMaterial extends MaterialBase
 		DiffuseColorV = Vector.ofArray([DiffuseColor.x,DiffuseColor.y,DiffuseColor.z,DiffuseColor.w]);
 		SpecularColorV = Vector.ofArray([SpecularColor.x,SpecularColor.y,SpecularColor.z,SpecularColor.w]);
 		SpecularExponentV = Vector.ofArray([SpecularExponent, 0, 0, 0]);
-		
-		AmbientColorV[0] = Math.random();
-		AmbientColorV[1] = Math.random();
-		AmbientColorV[2] = Math.random();
-		AmbientColorV[3] = 1;
 	}
 	
 	inline override public function draw(node:Node3D, pass:BasicPass3D):Void {
@@ -140,16 +135,21 @@ class PhongMaterial extends MaterialBase
 		glslProgram.setVertexUniformFromMatrix("mpos", node.worldMatrix, true);
 		glslProgram.setVertexUniformFromMatrix("mproj", pass.camera.perspectiveProjectionMatirx, true);
 		glslProgram.setVertexBufferAt("pos", node.drawAble.xyz.vertexBuff, 0, flash.display3D.Context3DVertexBufferFormat.FLOAT_3);
-		//glslProgram.setVertexBufferAt("norm", node.drawAble.norm.vertexBuff, 0, flash.display3D.Context3DVertexBufferFormat.FLOAT_3);
-		//LightPositionV[0] = lightNode.worldRawData[12];
-		//LightPositionV[1] =lightNode.worldRawData[13];
-		//LightPositionV[2] = lightNode.worldRawData[14];
-		//glslProgram.setVertexUniformFromVector("lightPosition", LightPositionV);
-		//glslProgram.setFragmentUniformFromVector("ambientColor", AmbientColorV);
-		//glslProgram.setFragmentUniformFromVector("diffuseColor",DiffuseColorV );
-		//glslProgram.setFragmentUniformFromVector("specularColor", SpecularColorV);
-		//glslProgram.setFragmentUniformFromVector("specularExponent",SpecularExponentV );
-		glslProgram.setFragmentUniformFromVector("color",AmbientColorV );
+		glslProgram.setVertexBufferAt("norm", node.drawAble.norm.vertexBuff, 0, flash.display3D.Context3DVertexBufferFormat.FLOAT_3);
+		LightPositionV[0] = lightNode.worldRawData[12];
+		LightPositionV[1] =lightNode.worldRawData[13];
+		LightPositionV[2] = lightNode.worldRawData[14];
+		c3d.setGLSLProgramConstantsFromVector3("lightPosition", LightPositionV);
+		c3d.setGLSLProgramConstantsFromVector3("ambientColor", AmbientColorV);
+		c3d.setGLSLProgramConstantsFromVector3("diffuseColor", DiffuseColorV);
+		c3d.setGLSLProgramConstantsFromVector3("specularColor", SpecularColorV);
+		c3d.setGLSLProgramConstantsFromVector1("specularExponent", SpecularExponentV);
+		/*glslProgram.setVertexUniformFromVector("lightPosition", LightPositionV);
+		glslProgram.setFragmentUniformFromVector("ambientColor", AmbientColorV);
+		glslProgram.setFragmentUniformFromVector("diffuseColor",DiffuseColorV );
+		glslProgram.setFragmentUniformFromVector("specularColor", SpecularColorV);
+		glslProgram.setFragmentUniformFromVector("specularExponent", SpecularExponentV );*/
+		
 		c3d.drawTriangles(node.drawAble.indexBufferSet.indexBuff);
 	}
 	private function createProgram ():Void {
@@ -160,24 +160,23 @@ class PhongMaterial extends MaterialBase
         var vertexShaderSource =
        "
 	   attribute vec3 pos;
-	   //attribute vec3 norm;
-	   //uniform vec3 lightPosition;
+	   attribute vec3 norm;
+	   uniform vec3 lightPosition;
 
-		//varying vec3 LightVec;
-		//varying vec3 SurfaceNormal;
-		//varying vec3 ReflectedLightVec;
-		//varying vec3 ViewVec;
+		varying vec3 LightVec;
+		varying vec3 SurfaceNormal;
+		varying vec3 ReflectedLightVec;
+		varying vec3 ViewVec;
 
 		uniform mat4 mproj;
         uniform mat4 mpos;
 		void main()
 		{
-			//vec3 eyespacePos   = (mpos * vec4(pos,1)).xyz;
-
-			//SurfaceNormal      = normalize((mpos * vec4(norm,1)).xyz);
-			//LightVec           = normalize(lightPosition - eyespacePos);
-			//ViewVec            = normalize(-eyespacePos);
-			//ReflectedLightVec  = normalize(-reflect(SurfaceNormal, LightVec));
+			vec3 eyespacePos   = mat3(mpos) * pos;
+			SurfaceNormal      = normalize(mat3(mpos) * norm);
+			LightVec           = normalize(lightPosition - eyespacePos);
+			ViewVec            = normalize(-eyespacePos);
+			ReflectedLightVec  = normalize(-reflect(SurfaceNormal, LightVec));
 
 			vec4 wpos = mpos * vec4(pos, 1);
             gl_Position = mproj * wpos;
@@ -186,23 +185,22 @@ class PhongMaterial extends MaterialBase
 		
         var fragmentShaderSource =
         "
-		uniform vec4 color;
-		//uniform vec3 ambientColor;
-		//uniform vec3 diffuseColor;
-		//uniform vec3 specularColor;
-		//uniform float specularExponent;
+		uniform vec3 ambientColor;
+		uniform vec3 diffuseColor;
+		uniform vec3 specularColor;
+		uniform float specularExponent;
 
-		//varying vec3 LightVec;
-		//varying vec3 SurfaceNormal;
-		//varying vec3 ReflectedLightVec;
-		//varying vec3 ViewVec;
+		varying vec3 LightVec;
+		varying vec3 SurfaceNormal;
+		varying vec3 ReflectedLightVec;
+		varying vec3 ViewVec;
 
 		void main()
 		{
-			//vec3 color = ambientColor;
-			//color += diffuseColor * max(0, dot(LightVec, SurfaceNormal));
-			//color += specularColor * pow(max(0, dot(ReflectedLightVec, ViewVec)), specularExponent);
-			gl_FragColor = color;
+			vec3 color = ambientColor;
+			color += diffuseColor * max(0, dot(LightVec, SurfaceNormal));
+			color += specularColor * pow(max(0, dot(ReflectedLightVec, ViewVec)), specularExponent);
+			gl_FragColor = vec4(color,1);
 		}";
         var fragmentShader = new GLSLFragmentShader(fragmentShaderSource);
         glslProgram.upload(vertexShader, fragmentShader);

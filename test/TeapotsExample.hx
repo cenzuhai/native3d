@@ -20,7 +20,7 @@ package ;
 	import lz.native3d.core.TextureSet;
 	import lz.native3d.materials.PhongMaterial;
 	import lz.native3d.meshs.MeshUtils;
-	import openfl.display.FPS;
+	
 	#if flash
 	import net.hires.debug.Stats;
 	#end
@@ -42,7 +42,6 @@ package ;
 		private var count:Int = 0;
 		
 		private var label:TextField;
-		
 		public function new()
 		{
 			super();
@@ -52,6 +51,7 @@ package ;
 			bv.instance3Ds[0].addEventListener(Event.CONTEXT3D_CREATE, initializeScene);
 			#if flash
 			addChild(new Stats());
+			#else
 			#end
 			label = new TextField();
 			label.autoSize = TextFieldAutoSize.LEFT;
@@ -109,8 +109,8 @@ package ;
 		public function enterFrameHandler( event : Event) : Void
 		{
 			label.text = rnode.children.length + " click";
-			rnode.rotationX+=0.2;
-			rnode.rotationZ += 0.22 ;
+			rnode.rotationY+=0.2;
+			//rnode.rotationZ += 0.22 ;
 			//bv.instance3Ds[0].camera.z +=  Math.sin(count / 150) * 5;
 			count++;
 			bv.instance3Ds[0].render();

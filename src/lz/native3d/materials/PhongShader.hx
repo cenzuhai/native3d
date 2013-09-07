@@ -62,7 +62,7 @@ class PhongShader extends Shader
 			if(SpecularColor!=null){
 				color += SpecularColor * pow(max(0, dot(ReflectedLightVec, ViewVec)), SpecularExponent);
 			}
-			out = color.xyzw;
+			out = SurfaceNormal.xyzx;// color.xyzw;
 		}
 	};
 	public function new() 

@@ -26,7 +26,7 @@ package lz.native3d.meshs ;
 		public static function createCube(r:Float,i3d:Instance3D,back:Bool=false):DrawAble3D
 		{
 			var drawable:DrawAble3D = new DrawAble3D();
-			var vin:Vector<Float> = #if flash Vector.ofArray( #end[
+			var vin:Vector<Float> = Vector.ofArray( [
 			// top
 				r, r, r,  -r, r, -r,  r, r, -r, 
 				r, r, r,  -r, r, r,  -r, r, -r, 
@@ -46,8 +46,8 @@ package lz.native3d.meshs ;
 				r, -r, r,  r, r, r,  r, r, -r, 
 				r, r, -r,  r, -r, -r,  r, -r, r
 			
-			]#if flash ) #end;
-			var uv:Vector<Float> = #if flash Vector.ofArray( #end[
+			] );
+			var uv:Vector<Float> = Vector.ofArray( [
 			// top
 				 1., 0.,  0., 1.,    1., 1.,
 				 1., 0., - 0., 0.,    0., 1.,
@@ -67,10 +67,10 @@ package lz.native3d.meshs ;
 				   1., 1.,  1., 0.,    0., 0.,
 				   0., 0.,    0., 1.,    1., 1.
 			
-			] #if flash) #end;
+			] );
 			
 			var ilen = Std.int(vin.length / 3);
-			var indexs = new Vector<#if flash UInt #else Int #end>();
+			var indexs = new Vector<UInt>();
 			if (back) {
 				ilen = Std.int(ilen/3 );
 				for (i in 0...ilen) {
@@ -2102,7 +2102,7 @@ package lz.native3d.meshs ;
 				norm[i * 3+1] = normv.y;
 				norm[i * 3+2] = normv.z;
 			}
-			drawable.norm = new VertexBufferSet(Std.int(norm.length / 3), 3, norm, 0,drawable.xyz.i3d);
+			drawable.norm = new VertexBufferSet(Std.int(norm.length / 3), 3, norm, 0, drawable.xyz.i3d);
 		}
 		
 		
