@@ -92,7 +92,7 @@ package ;
 			light.z = -200;
 			//light.material = new ColorMaterial(new Vector3D(Math.random() / 5, Math.random() / 5, Math.random() / 5, 1), new Vector3D(Math.random(), Math.random(), Math.random(), 1), new BasicLight3D());
 			
-			var c:Int = 50;
+			var c:Int = 500;
 			while (c-->0) {
 				addCube();
 			}
